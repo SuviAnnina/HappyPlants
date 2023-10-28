@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Happy Plants</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/extrastyling.css" /> -->
+</head>
+
+<body>
+
+    <h1>Edit cutting</h1>
+
+    <div class="form-center">
+        <form th:object=${cutting} th:action="@{/update}" action="#" method="post">
+            <input type="hidden" th:field="${cutting.cuttingId}" />
+            <p><label>Name:</label><input type="text" th:field="${cutting.cuttingName}" /></p>
+            <p><label>Description:</label><input type="text" th:field="${cutting.cuttingDescription}" /></p>
+            <p><label>Date cut:</label><input type="text" th:field="${cutting.dateCut}" /></p>
+            <p><label>Price:</label><input type="text" th:field="${cutting.price}" /></p>
+            <p><label>Note:</label><input type="text" th:field="${cutting.note}" /></p>
+            <label>Plant:</label>
+            <select th:field="*{plant}" class="form-control">
+                <option th:each="plant: ${plants}" th:value="${plant.plantId}" th:text="${plant.plantName}">
+                </option>
+            </select>
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </form>
+
+    </div>
+</body>
+
+</html>
