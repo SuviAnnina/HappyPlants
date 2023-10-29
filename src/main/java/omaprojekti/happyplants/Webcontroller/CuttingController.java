@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import omaprojekti.happyplants.Domain.Cutting;
 import omaprojekti.happyplants.Domain.CuttingRepository;
+import omaprojekti.happyplants.Domain.Plant;
 import omaprojekti.happyplants.Domain.PlantRepository;
 
 @Controller
@@ -45,10 +48,41 @@ public class CuttingController {
     }
 
     /* Uuden pistokkaan lisäys */
+    @GetMapping("/addcutting")
+    public String addCutting(Model model) {
+        model.addAttribute("cutting", new Cutting());
+        model.addAttribute("plants", plantRepository.findAll());
+        return "addcutting";
+    }
 
     /* Uuden pistokkaan tallennus */
+    @PostMapping("/save")
+    public String saveCutting(Cutting cutting) {
+        cuttingRepository.save(cutting);
+        return "redirect:/cuttinglist";
+        /* huom muuta postMappping /savecutting */
+    }
 
     /*
      * Päivittää muokatun pistokkaan tiedot vanhojen tietojen tilalle tietokantaan
      */
+    @PostMapping("/updateCutting")
+    public String updateCutting(@ModelAttribute("cutting") Cutting updatedCutting) {
+        Long cuttingId = updatedCutting.getCuttingId();
+        Cutting currentCutting = cuttingRepository.findById(cuttingId).orElse(null);
+
+        if (currentCutting != null) {
+            currentCutting.setCuttingName(updatedCutting.getCuttingName());
+            currentCutting.setCuttingDescription(updatedCutting.getCuttingDescription());
+            currentCutting.setDateCut(updatedCutting.getDateCut());
+            currentCutting.setPrice(updatedCutting.getPrice());
+            currentCutting.setNote(updatedCutting.getNote());
+
+            Plant selectedPlant = plantRepository.findById(updatedCutting.getPlant().getPlantId()).orElse(null);
+            currentCutting.setPlant(selectedPlant);
+
+            cuttingRepository.save(currentCutting);
+        }
+        return "redirect:/cuttinglist";
+    }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Happy Plants</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+
+<body>
+
+    <h1>Add a new species</h1>
+
+    <div class="form-center">
+        <form th:object=${plant} th:action="@{/savespecies}" action="#" method="post">
+            <p><label>Name:</label><input type="text" th:field="${plant.plantName}" /></p>
+            <p><label>Light requirement:</label><input type="text" th:field="${plant.lightRequirement}" /></p>
+            <p><label>Description:</label><input type="text" th:field="${plant.plantDescription}" /></p>
+
+            <p>If species is not on the list, please add it first <a href="/addspecies"
+                    class="btn btn-primary">here</a>!</p>
+            <label>Species:</label>
+            <select th:field="*{species}" class="form-control">
+                <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}">
+                </option>
+            </select>
+
+            <p>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                <input type="reset" value="Reset" class="btn btn-primary" />
+            </p>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <p><a href="/cuttinglist" class="btn btn-primary">Back to cuttinglisting</a></p>
+        </form>
+    </div>
+</body>
+
+</html>

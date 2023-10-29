@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Happy Plants</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/css/extrastyling.css" /> -->
+</head>
+
+<body>
+
+    <h1>Edit plant</h1>
+
+    <div class="form-center">
+        <form th:object=${plant} th:action="@{/updateplant}" action="#" method="post">
+            <input type="hidden" th:field="${plant.plantId}" />
+            <p><label>Name:</label><input type="text" th:field="${plant.plantName}" /></p>
+            <p><label>Light requirement:</label><input type="text" th:field="${plant.lightRequirement}" /></p>
+            <p><label>Description:</label><input type="text" th:field="${plant.plantDescription}" /></p>
+
+            <label>Species:</label>
+            <select th:field="*{species}" class="form-control">
+                <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}">
+                </option>
+            </select>
+            <p>If species is not on the list, please add it first <a href="/addspecies"
+                    class="btn btn-primary">here</a>!</p>
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </form>
+        <p><a href="/plantlist" class="btn btn-primary">Back to plantlisting</a></p>
+
+    </div>
+</body>
+
+</html>

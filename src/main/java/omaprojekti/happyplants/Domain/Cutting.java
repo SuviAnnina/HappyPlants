@@ -67,11 +67,11 @@ public class Cutting {
         this.cuttingId = cuttingId;
     }
 
-    public void setName(String cuttingName) {
+    public void setCuttingName(String cuttingName) {
         this.cuttingName = cuttingName;
     }
 
-    public void setDescription(String cuttingDescription) {
+    public void setCuttingDescription(String cuttingDescription) {
         this.cuttingDescription = cuttingDescription;
     }
 
