@@ -11,7 +11,7 @@
 
     <h1>Add a new cutting</h1>
     <div class="form-center">
-        <form th:object=${cutting} th:action="@{/save}" action="#" method="post">
+        <form th:object=${cutting} th:action="@{/saveCutting}" action="#" method="post">
             <p><label>Name:</label><input type="text" th:field="${cutting.cuttingName}" /></p>
             <p><label>Description:</label><input type="text" th:field="${cutting.cuttingDescription}" /></p>
             <p><label>Date cut:</label><input type="text" th:field="${cutting.dateCut}" /></p>

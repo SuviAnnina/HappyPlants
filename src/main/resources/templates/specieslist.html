@@ -20,15 +20,14 @@
             <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
         </form>
     </div> -->
-    <h2>List of all the plants</h2>
+    <h2>List of all the species</h2>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Plant's name</th>
+                <th>Plant's latin name</th>
                 <th>Description</th>
-                <th>Light requirement</th>
-                <th>Species</th>
+                <!-- <th>Species</th> -->
                 <th>Delete</th>
                 <!--                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th> -->
                 <th>Edit</th>
@@ -36,28 +35,24 @@
         </thead>
 
         <tbody>
-            <tr th:each="plant : ${plants}">
+            <tr th:each="species : ${allSpecies}">
 
-                <td th:text="${plant.plantName}"></td>
-                <td th:text="${plant.plantDescription}"></td>
+                <td th:text="${species.speciesLatinName}"></td>
+                <td th:text="${species.speciesDescription}"></td>
                 <!--                 <td th:text="${book.category} ? ${book.category.name} : ' ' "></td> -->
-                <td th:text="${plant.lightRequirement}"></td>
-                <td th:text="${plant.species.speciesLatinName}"></td>
+
 
                 <!-- <td sec:authorize="hasAuthority('ADMIN')"> -->
-                <td> <a th:href="@{/deleteplant/{id}(id=${plant.plantId})}" class="btn btn-danger">Delete</a></td>
+                <td> <a th:href="@{/deletespecies/{id}(id=${species.speciesId})}" class="btn btn-danger">Delete</a></td>
 
-                <td><a th:href="@{/editplant/{id}(id=${plant.plantId})}" class="btn btn-danger">Edit</a></td>
+                <td><a th:href="@{/editspecies/{id}(id=${species.speciesId})}" class="btn btn-danger">Edit</a></td>
             </tr>
 
         </tbody>
     </table>
 
     <a href="/cuttinglist" class="btn btn-primary">Cuttinglisting</a>
-    <a href="/addcutting" class="btn btn-primary">Add a new cutting</a>
     <a href="/plantlist" class="btn btn-primary">Plantlisting</a>
-    <a href="/addplant" class="btn btn-primary">Add a new plant</a>
-    <a href="/specieslist" class="btn btn-primary">Specieslisting</a>
     <a href="/addspecies" class="btn btn-primary">Add a new species</a>
     <!--     <a href="/users" class="btn btn-primary" sec:authorize="hasAuthority('ADMIN')">List users</a>
  -->

@@ -56,11 +56,10 @@ public class CuttingController {
     }
 
     /* Uuden pistokkaan tallennus */
-    @PostMapping("/save")
+    @PostMapping("/saveCutting")
     public String saveCutting(Cutting cutting) {
         cuttingRepository.save(cutting);
         return "redirect:/cuttinglist";
-        /* huom muuta postMappping /savecutting */
     }
 
     /*
