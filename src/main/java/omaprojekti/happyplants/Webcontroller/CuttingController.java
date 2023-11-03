@@ -40,6 +40,7 @@ public class CuttingController {
 
     /* Valitaan muokattava pistokas tietokannasta id:n perusteella */
     @GetMapping("/editcutting/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editCutting(@PathVariable("id") long cuttingId, Model model) {
         Cutting cutting = cuttingRepository.findById(cuttingId).orElse(null);
         if (cutting != null) {
@@ -51,6 +52,7 @@ public class CuttingController {
 
     /* Uuden pistokkaan lisäys */
     @GetMapping("/addcutting")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String addCutting(Model model) {
         model.addAttribute("cutting", new Cutting());
         model.addAttribute("plants", plantRepository.findAll());
@@ -59,6 +61,7 @@ public class CuttingController {
 
     /* Uuden pistokkaan tallennus */
     @PostMapping("/saveCutting")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String saveCutting(Cutting cutting) {
         cuttingRepository.save(cutting);
         return "redirect:/cuttinglist";
@@ -68,6 +71,7 @@ public class CuttingController {
      * Päivittää muokatun pistokkaan tiedot vanhojen tietojen tilalle tietokantaan
      */
     @PostMapping("/updateCutting")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String updateCutting(@ModelAttribute("cutting") Cutting updatedCutting) {
         Long cuttingId = updatedCutting.getCuttingId();
         Cutting currentCutting = cuttingRepository.findById(cuttingId).orElse(null);

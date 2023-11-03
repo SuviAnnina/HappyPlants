@@ -40,6 +40,7 @@ public class PlantController {
 
     /* Muokkaa valitun kasvin tietoja id:n perusteella */
     @GetMapping("/editplant/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editPlant(@PathVariable("id") long plantId, Model model) {
         Plant plant = plantRepository.findById(plantId).orElse(null);
         if (plant != null) {
@@ -51,6 +52,7 @@ public class PlantController {
 
     /* Lisää uusi kasvi */
     @GetMapping("/addplant")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String addPlant(Model model) {
         model.addAttribute("plant", new Plant());
         model.addAttribute("species", speciesRepository.findAll());
@@ -59,6 +61,7 @@ public class PlantController {
 
     /* Tallenna uusi kasvi */
     @PostMapping("/saveplant")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String savePlant(Plant plant) {
         plantRepository.save(plant);
         return "redirect:/plantlist";
@@ -67,6 +70,7 @@ public class PlantController {
 
     /* Päivitä muokatun kasvin tiedot vanhojen tilalle */
     @PostMapping("/updateplant")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String updatePlant(@ModelAttribute("plant") Plant updatedPlant) {
         Long plantId = updatedPlant.getPlantId();
         Plant currentPlant = plantRepository.findById(plantId).orElse(null);

@@ -35,6 +35,7 @@ public class SpeciesController {
 
     /* Valitaan muokattava lajike id:n perusteella */
     @GetMapping("/editspecies/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editSpecies(@PathVariable("id") Long speciesId, Model model) {
         Species species = speciesRepository.findById(speciesId).orElse(null);
         if (species != null) {
@@ -46,6 +47,7 @@ public class SpeciesController {
 
     /* Uuden lajikkeen lisäys */
     @GetMapping("/addspecies")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String addSpecies(Model model) {
         model.addAttribute("species", new Species());
         /* model.addAttribute("plants", plantRepository.findAll()); */
@@ -54,6 +56,7 @@ public class SpeciesController {
 
     /* Uuden lajikkeen tallennus */
     @PostMapping("/saveSpecies")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String saveSpecies(Species species) {
         speciesRepository.save(species);
         return "redirect:/specieslist";
@@ -61,6 +64,7 @@ public class SpeciesController {
 
     /* Päivittää muokatun lajikkeen tiedot vanhojen tilalle */
     @PostMapping("/updateSpecies")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String updateSpecies(@ModelAttribute("species") Species updatedSpecies) {
         Long speciesId = updatedSpecies.getSpeciesId();
         Species currentSpecies = speciesRepository.findById(speciesId).orElse(null);

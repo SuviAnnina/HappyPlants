@@ -11,14 +11,20 @@
 
     <h1>Happy Plants</h1>
 
-    <!--     <div class="col-md-4">
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
         <h3>Welcome <span sec:authentication="name"></span>!</h3>
     </div>
-    <div class="col-md-4" style="padding:20px 0">
+    <div th:if="${#authorization.expression('isAuthenticated()')}" style="padding:20px 0">
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
         </form>
-    </div> -->
+    </div>
+
+    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+        <p>To see more, log in!</p>
+        <a href="/login" class="btn btn-primary">Login</a>
+    </div>
+
     <h2>List of all the cuttings and their info</h2>
 
     <table class="table table-striped">
@@ -30,9 +36,8 @@
                 <th>Price</th>
                 <th>Note</th>
                 <th>Plant name</th>
-                <th>Delete</th>
-                <!--                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th> -->
-                <th>Edit</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
             </tr>
         </thead>
 
@@ -46,19 +51,20 @@
                 <td th:text="${cutting.price}"></td>
                 <td th:text="${cutting.note}"></td>
                 <td th:text="${cutting.plant.plantName}"></td>
-                <!-- <td sec:authorize="hasAuthority('ADMIN')"> -->
-                <td> <a th:href="@{/delete/{id}(id=${cutting.cuttingId})}" class="btn btn-danger">Delete</a></td>
+                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editcutting/{id}(id=${cutting.cuttingId})}"
+                        class="btn btn-info">Edit</a></td>
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/delete/{id}(id=${cutting.cuttingId})}" class="btn btn-danger">Delete</a>
+                </td>
 
-                <td><a th:href="@{/editcutting/{id}(id=${cutting.cuttingId})}" class="btn btn-info">Edit</a></td>
             </tr>
 
         </tbody>
     </table>
 
-    <a href="/addcutting" class="btn btn-primary">Add a new cutting</a>
+    <a sec:authorize="hasAuthority('ADMIN')" href="/addcutting" class="btn btn-primary">Add a new cutting</a>
     <a href="/plantlist" class="btn btn-primary">Back to plantlisting</a>
-    <!--     <a href="/users" class="btn btn-primary" sec:authorize="hasAuthority('ADMIN')">List users</a>
- -->
+
 </body>
 
 </html>

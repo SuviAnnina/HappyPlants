@@ -11,16 +11,25 @@
 
     <h1>Happy Plants</h1>
 
-    <!--     <div class="col-md-4">
+    <p>
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
         <h3>Welcome <span sec:authentication="name"></span>!</h3>
     </div>
-    <div class="col-md-4" style="padding:20px 0">
+    <div th:if="${#authorization.expression('isAuthenticated()')}" style="padding:20px 0">
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
         </form>
-    </div> -->
-    <h2>List of all the plants</h2>
+    </div>
 
+    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+        <p>To see more, log in!</p>
+        <a href="/login" class="btn btn-primary">Login</a>
+    </div>
+    </p>
+    <br />
+    <p>
+    <h2>List of all the plants</h2>
+    </p>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -28,9 +37,8 @@
                 <th>Plant's name</th>
                 <th>Description</th>
                 <th>Light requirement</th>
-                <th>Delete</th>
-                <!--                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th> -->
-                <th>Edit</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
             </tr>
         </thead>
 
@@ -40,28 +48,31 @@
                 <td th:text="${plant.species.speciesLatinName}"></td>
                 <td th:text="${plant.plantName}"></td>
                 <td th:text="${plant.plantDescription}"></td>
-                <!--                 <td th:text="${book.category} ? ${book.category.name} : ' ' "></td> -->
                 <td th:text="${plant.lightRequirement}"></td>
 
-                <!-- <td sec:authorize="hasAuthority('ADMIN')"> -->
-                <td> <a th:href="@{/deleteplant/{id}(id=${plant.plantId})}" class="btn btn-danger">Delete</a></td>
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/editplant/{id}(id=${plant.plantId})}" class="btn btn-info">Edit</a>
+                </td>
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/deleteplant/{id}(id=${plant.plantId})}" class="btn btn-danger">Delete</a>
+                </td>
 
-                <td><a th:href="@{/editplant/{id}(id=${plant.plantId})}" class="btn btn-info">Edit</a></td>
             </tr>
 
         </tbody>
     </table>
     <p>
         <a href="/specieslist" class="btn btn-primary">Specieslisting</a>
-        <a href="/addspecies" class="btn btn-primary">Add a new species</a>
+        <a sec:authorize="hasAuthority('ADMIN')" href="/addspecies" class="btn btn-primary">Add a new species</a>
     </p>
     <p>
         <a href="/plantlist" class="btn btn-primary">Plantlisting</a>
-        <a href="/addplant" class="btn btn-primary">Add a new plant</a>
+        <a sec:authorize="hasAuthority('ADMIN')" href="/addplant" class="btn btn-primary">Add a new plant</a>
     </p>
     <p>
-        <a href="/cuttinglist" class="btn btn-primary">Cuttinglisting</a>
-        <a href="/addcutting" class="btn btn-primary">Add a new cutting</a>
+        <a th:if="${#authorization.expression('hasAuthority(''ADMIN'') or hasAuthority(''USER'')')}" href="/cuttinglist"
+            class="btn btn-primary">Cuttinglisting</a>
+        <a sec:authorize="hasAuthority('ADMIN')" href="/addcutting" class="btn btn-primary">Add a new cutting</a>
     </p>
     <!--     <a href="/users" class="btn btn-primary" sec:authorize="hasAuthority('ADMIN')">List users</a>
  -->
