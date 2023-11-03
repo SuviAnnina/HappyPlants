@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <title>Happy Plants</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link type="text/css" rel="stylesheet" href="/css/extrastyling.css" /> -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 
 <body>
@@ -25,10 +24,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Species</th>
                 <th>Plant's name</th>
                 <th>Description</th>
                 <th>Light requirement</th>
-                <th>Species</th>
                 <th>Delete</th>
                 <!--                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th> -->
                 <th>Edit</th>
@@ -38,27 +37,32 @@
         <tbody>
             <tr th:each="plant : ${plants}">
 
+                <td th:text="${plant.species.speciesLatinName}"></td>
                 <td th:text="${plant.plantName}"></td>
                 <td th:text="${plant.plantDescription}"></td>
                 <!--                 <td th:text="${book.category} ? ${book.category.name} : ' ' "></td> -->
                 <td th:text="${plant.lightRequirement}"></td>
-                <td th:text="${plant.species.speciesLatinName}"></td>
 
                 <!-- <td sec:authorize="hasAuthority('ADMIN')"> -->
                 <td> <a th:href="@{/deleteplant/{id}(id=${plant.plantId})}" class="btn btn-danger">Delete</a></td>
 
-                <td><a th:href="@{/editplant/{id}(id=${plant.plantId})}" class="btn btn-danger">Edit</a></td>
+                <td><a th:href="@{/editplant/{id}(id=${plant.plantId})}" class="btn btn-info">Edit</a></td>
             </tr>
 
         </tbody>
     </table>
-
-    <a href="/cuttinglist" class="btn btn-primary">Cuttinglisting</a>
-    <a href="/addcutting" class="btn btn-primary">Add a new cutting</a>
-    <a href="/plantlist" class="btn btn-primary">Plantlisting</a>
-    <a href="/addplant" class="btn btn-primary">Add a new plant</a>
-    <a href="/specieslist" class="btn btn-primary">Specieslisting</a>
-    <a href="/addspecies" class="btn btn-primary">Add a new species</a>
+    <p>
+        <a href="/specieslist" class="btn btn-primary">Specieslisting</a>
+        <a href="/addspecies" class="btn btn-primary">Add a new species</a>
+    </p>
+    <p>
+        <a href="/plantlist" class="btn btn-primary">Plantlisting</a>
+        <a href="/addplant" class="btn btn-primary">Add a new plant</a>
+    </p>
+    <p>
+        <a href="/cuttinglist" class="btn btn-primary">Cuttinglisting</a>
+        <a href="/addcutting" class="btn btn-primary">Add a new cutting</a>
+    </p>
     <!--     <a href="/users" class="btn btn-primary" sec:authorize="hasAuthority('ADMIN')">List users</a>
  -->
 </body>

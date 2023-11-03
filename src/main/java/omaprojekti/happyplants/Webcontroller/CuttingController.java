@@ -1,6 +1,7 @@
 package omaprojekti.happyplants.Webcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class CuttingController {
 
     /* Poistaa valitun pistokkan id:n perusteella tietokannasta */
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteCutting(@PathVariable("id") Long cuttingId, Model model) {
         cuttingRepository.deleteById(cuttingId);
         return "redirect:/cuttinglist";

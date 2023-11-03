@@ -59,6 +59,13 @@ public class Plant {
         this.species = species;
     }
 
+    public Plant(String plantName, String lightRequirement, String plantDescription, Species species) {
+        this.plantName = plantName;
+        this.lightRequirement = lightRequirement;
+        this.plantDescription = plantDescription;
+        this.species = species;
+    }
+
     /* Setters */
     public void setPlantId(Long plantId) {
         this.plantId = plantId;

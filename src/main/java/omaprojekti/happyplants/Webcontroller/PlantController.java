@@ -1,6 +1,7 @@
 package omaprojekti.happyplants.Webcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class PlantController {
 
     /* Poista valittu kasvi tietokannasta id:n perusteella */
     @GetMapping("/deleteplant/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deletePlant(@PathVariable("id") Long plantId, Model model) {
         plantRepository.deleteById(plantId);
         return "redirect:/plantlist";

@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <title>Happy Plants</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link type="text/css" rel="stylesheet" href="/css/extrastyling.css" /> -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 
 <body>
@@ -24,9 +23,8 @@
                 <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}">
                 </option>
             </select>
-            <p>If species is not on the list, please add it first <a href="/addspecies"
-                    class="btn btn-primary">here</a>!</p>
-            <input type="submit" value="Submit" class="btn btn-primary" />
+            <p>If species is not on the list, please add it first <a href="/addspecies">here</a>!</p>
+            <input type="submit" value="Submit" class="btn btn-success" />
         </form>
         <p><a href="/plantlist" class="btn btn-primary">Back to plantlisting</a></p>
 

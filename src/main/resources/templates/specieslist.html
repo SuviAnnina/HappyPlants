@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <title>Happy Plants</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link type="text/css" rel="stylesheet" href="/css/extrastyling.css" /> -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 
 <body>
@@ -20,7 +19,7 @@
             <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
         </form>
     </div> -->
-    <h2>List of all the species</h2>
+    <h2>List of all the species and their descriptions</h2>
 
     <table class="table table-striped">
         <thead>
@@ -45,15 +44,14 @@
                 <!-- <td sec:authorize="hasAuthority('ADMIN')"> -->
                 <td> <a th:href="@{/deletespecies/{id}(id=${species.speciesId})}" class="btn btn-danger">Delete</a></td>
 
-                <td><a th:href="@{/editspecies/{id}(id=${species.speciesId})}" class="btn btn-danger">Edit</a></td>
+                <td><a th:href="@{/editspecies/{id}(id=${species.speciesId})}" class="btn btn-info">Edit</a></td>
             </tr>
 
         </tbody>
     </table>
 
-    <a href="/cuttinglist" class="btn btn-primary">Cuttinglisting</a>
-    <a href="/plantlist" class="btn btn-primary">Plantlisting</a>
     <a href="/addspecies" class="btn btn-primary">Add a new species</a>
+    <a href="/plantlist" class="btn btn-primary">Back to plantlisting</a>
     <!--     <a href="/users" class="btn btn-primary" sec:authorize="hasAuthority('ADMIN')">List users</a>
  -->
 </body>

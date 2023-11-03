@@ -43,11 +43,12 @@ public class Cutting {
         this.price = price;
     }
 
-    public Cutting(String cuttingName, String cuttingDescription, String dateCut, Plant plant) {
+    public Cutting(String cuttingName, String cuttingDescription, String dateCut, Plant plant, String note) {
         this.cuttingName = cuttingName;
         this.cuttingDescription = cuttingDescription;
         this.dateCut = dateCut;
         this.plant = plant;
+        this.note = note;
     }
 
     public Cutting(Long cuttingId, String cuttingName, String cuttingDescription, String dateCut, double price,

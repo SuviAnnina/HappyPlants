@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <title>Happy Plants</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link type="text/css" rel="stylesheet" href="/css/extrastyling.css" /> -->
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 
 <body>
@@ -18,7 +17,7 @@
             <p><label>Species Latin name:</label><input type="text" th:field="${species.speciesLatinName}" /></p>
             <p><label>Description:</label><input type="text" th:field="${species.speciesDescription}" /></p>
 
-            <input type="submit" value="Submit" class="btn btn-primary" />
+            <input type="submit" value="Submit" class="btn btn-success" />
         </form>
         <p><a href="/specieslist" class="btn btn-primary">Back to specieslisting</a></p>
 

@@ -1,6 +1,7 @@
 package omaprojekti.happyplants.Webcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-/* import omaprojekti.happyplants.Domain.PlantRepository; */
 import omaprojekti.happyplants.Domain.Species;
 import omaprojekti.happyplants.Domain.SpeciesRepository;
 
@@ -17,11 +17,6 @@ public class SpeciesController {
 
     @Autowired
     private SpeciesRepository speciesRepository;
-
-    /*
-     * @Autowired
-     * private PlantRepository plantRepository;
-     */
 
     /* Listaa kaikki lajikkeet (species) */
     @GetMapping("/specieslist")
@@ -32,6 +27,7 @@ public class SpeciesController {
 
     /* Poistaa valitun lajikkeen id:n perusteella */
     @GetMapping("/deletespecies/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteSpecies(@PathVariable("id") Long speciesId, Model model) {
         speciesRepository.deleteById(speciesId);
         return "redirect:/specieslist";
@@ -47,7 +43,6 @@ public class SpeciesController {
         }
         return "editspecies";
     }
-    /* Tarvitaanko planttia tähän? Tarkista */
 
     /* Uuden lajikkeen lisäys */
     @GetMapping("/addspecies")
