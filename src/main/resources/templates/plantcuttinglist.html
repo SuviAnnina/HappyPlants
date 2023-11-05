@@ -25,7 +25,7 @@
         <a href="/login" class="btn btn-primary">Login</a>
     </div>
 
-    <h2>List of all the cuttings and their info</h2>
+    <h2>List of all the cuttings available from <span th:text="${plant.plantName}"></span></h2>
 
     <table class="table table-striped">
         <thead>
@@ -45,11 +45,11 @@
         </thead>
 
         <tbody>
-            <tr th:each="cutting : ${cuttings}">
+            <tr th:each="cutting : ${plantcuttinglist}">
 
                 <td th:text="${cutting.cuttingName}"></td>
                 <td th:text="${cutting.cuttingDescription}"></td>
-                <!--                 <td th:text="${book.category} ? ${book.category.name} : ' ' "></td> -->
+
                 <td th:text="${cutting.dateCut}"></td>
                 <td th:text="${cutting.price}"></td>
                 <td th:text="${cutting.note}"></td>

@@ -37,6 +37,7 @@
                 <th>Plant's name</th>
                 <th>Description</th>
                 <th>Light requirement</th>
+                <th sec:authorize="hasAuthority('ADMIN')">Cuttings</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
                 <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
             </tr>
@@ -49,6 +50,12 @@
                 <td th:text="${plant.plantName}"></td>
                 <td th:text="${plant.plantDescription}"></td>
                 <td th:text="${plant.lightRequirement}"></td>
+
+                <td sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+                    <a th:if="${plant.cuttings.size() > 0}" th:href="@{/plantcuttinglist/{id}(id=${plant.plantId})}"
+                        class="btn btn-info">Cuttings</a>
+                </td>
+
 
                 <td sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/editplant/{id}(id=${plant.plantId})}" class="btn btn-info">Edit</a>

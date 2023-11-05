@@ -1,5 +1,8 @@
 package omaprojekti.happyplants.Webcontroller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import omaprojekti.happyplants.Domain.Cutting;
 import omaprojekti.happyplants.Domain.Plant;
 import omaprojekti.happyplants.Domain.PlantRepository;
 import omaprojekti.happyplants.Domain.Species;
@@ -28,6 +32,21 @@ public class PlantController {
     public String listPlants(Model model) {
         model.addAttribute("plants", plantRepository.findAll());
         return "plantlist";
+    }
+
+    /* Hakee valitun kasvin pistokaslistan */
+    @GetMapping("/plantcuttinglist/{id}")
+    // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public String plantCuttingList(@PathVariable("id") Long plantId, Model model) {
+
+        Plant plant = plantRepository.findById(plantId).orElse(null);
+        if (plant != null) {
+            List<Cutting> plantCuttingList = plant.getCuttings();
+            model.addAttribute("plant", plant);
+            model.addAttribute("plantcuttinglist", plantCuttingList);
+        }
+        return "plantcuttinglist";
     }
 
     /* Poista valittu kasvi tietokannasta id:n perusteella */
@@ -87,4 +106,5 @@ public class PlantController {
         }
         return "redirect:/plantlist";
     }
+
 }
