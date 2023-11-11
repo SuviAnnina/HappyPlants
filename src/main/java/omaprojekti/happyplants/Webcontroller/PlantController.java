@@ -1,7 +1,6 @@
 package omaprojekti.happyplants.Webcontroller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -84,7 +83,6 @@ public class PlantController {
     public String savePlant(Plant plant) {
         plantRepository.save(plant);
         return "redirect:/plantlist";
-        /* huom saveplant */
     }
 
     /* Päivitä muokatun kasvin tiedot vanhojen tilalle */
