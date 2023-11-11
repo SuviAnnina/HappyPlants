@@ -1,13 +1,13 @@
 package omaprojekti.happyplants.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Cutting {
@@ -16,9 +16,14 @@ public class Cutting {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cuttingId;
 
+    @NotBlank(message = "Name cannot be empty")
     private String cuttingName;
+
     private String cuttingDescription;
+
+    @NotBlank(message = "Date cannot be empty")
     private String dateCut;
+
     private double price;
     private String note;
 

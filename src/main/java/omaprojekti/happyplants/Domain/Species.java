@@ -1,15 +1,14 @@
 package omaprojekti.happyplants.Domain;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Species {
@@ -18,6 +17,7 @@ public class Species {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long speciesId;
 
+    @NotBlank(message = "Latin name cannot be empty")
     private String speciesLatinName;
     private String speciesDescription;
 

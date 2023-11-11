@@ -15,14 +15,20 @@
         <form th:object=${plant} th:action="@{/updateplant}" action="#" method="post">
             <input type="hidden" th:field="${plant.plantId}" />
             <p><label>Name:</label><input type="text" th:field="${plant.plantName}" /></p>
+            <span th:if="${#fields.hasErrors('plantName')}" th:errors="*{plantName}"></span>
+
             <p><label>Light requirement:</label><input type="text" th:field="${plant.lightRequirement}" /></p>
             <p><label>Description:</label><input type="text" th:field="${plant.plantDescription}" /></p>
 
             <label>Species:</label>
             <select th:field="*{species}" class="form-control">
-                <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}">
+                <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}"
+                    th:selected="${s.speciesId eq plant.species?.speciesId}">
                 </option>
             </select>
+
+
+
             <p>If species is not on the list, please add it first <a href="/addspecies">here</a>!</p>
             <input type="submit" value="Submit" class="btn btn-success" />
         </form>

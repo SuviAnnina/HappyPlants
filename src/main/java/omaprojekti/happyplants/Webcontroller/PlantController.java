@@ -1,7 +1,6 @@
 package omaprojekti.happyplants.Webcontroller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -10,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import jakarta.validation.Valid;
 import omaprojekti.happyplants.Domain.Cutting;
 import omaprojekti.happyplants.Domain.Plant;
 import omaprojekti.happyplants.Domain.PlantRepository;
 import omaprojekti.happyplants.Domain.Species;
 import omaprojekti.happyplants.Domain.SpeciesRepository;
+
+/* uusi */
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class PlantController {
@@ -35,7 +37,6 @@ public class PlantController {
 
     /* Hakee valitun kasvin pistokaslistan */
     @GetMapping("/plantcuttinglist/{id}")
-    // @PreAuthorize("hasAuthority('ADMIN')")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String plantCuttingList(@PathVariable("id") Long plantId, Model model) {
 
@@ -80,7 +81,10 @@ public class PlantController {
     /* Tallenna uusi kasvi */
     @PostMapping("/saveplant")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String savePlant(Plant plant) {
+    public String savePlant(@Valid Plant plant, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addplant";
+        }
         plantRepository.save(plant);
         return "redirect:/plantlist";
     }
@@ -88,7 +92,7 @@ public class PlantController {
     /* Päivitä muokatun kasvin tiedot vanhojen tilalle */
     @PostMapping("/updateplant")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String updatePlant(@ModelAttribute("plant") Plant updatedPlant) {
+    public String updatePlant(@Valid @ModelAttribute("plant") Plant updatedPlant, BindingResult bindingResult) {
         Long plantId = updatedPlant.getPlantId();
         Plant currentPlant = plantRepository.findById(plantId).orElse(null);
 
@@ -100,9 +104,11 @@ public class PlantController {
                     .orElse(null);
             currentPlant.setSpecies(selectedPlantSpecies);
 
+            if (bindingResult.hasErrors()) {
+                return "editplant";
+            }
             plantRepository.save(currentPlant);
         }
         return "redirect:/plantlist";
     }
-
 }

@@ -2,7 +2,6 @@ package omaprojekti.happyplants.Webcontroller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.validation.Valid;
 import omaprojekti.happyplants.Domain.Cutting;
 import omaprojekti.happyplants.Domain.CuttingRepository;
 
@@ -44,9 +44,9 @@ public class CuttingRestController {
         return cuttingRepository.findByCuttingName(cuttingName);
     }
 
-    /* Tallentaa uuden pistokkaan */
+    /* Tallentaa uuden pistokkaan tietokantaan */
     @PostMapping("/cuttings")
-    public @ResponseBody Cutting saveCuttingRest(@RequestBody Cutting cutting) {
+    public @ResponseBody Cutting saveCuttingRest(@Valid @RequestBody Cutting cutting) {
         return cuttingRepository.save(cutting);
     }
 }

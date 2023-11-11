@@ -1,9 +1,7 @@
 package omaprojekti.happyplants.Domain;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Plant {
@@ -20,7 +19,9 @@ public class Plant {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long plantId;
 
+    @NotBlank(message = "Name cannot be empty")
     private String plantName;
+
     private String lightRequirement;
     private String plantDescription;
 
@@ -122,5 +123,4 @@ public class Plant {
         return "Plant plantId: " + plantId + ", plant name: " + plantName + ", light requirement: " + lightRequirement
                 + ", plant description: " + plantDescription;
     }
-
 }

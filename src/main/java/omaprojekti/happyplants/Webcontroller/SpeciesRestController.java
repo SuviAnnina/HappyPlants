@@ -2,7 +2,6 @@ package omaprojekti.happyplants.Webcontroller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import jakarta.validation.Valid;
 import omaprojekti.happyplants.Domain.Species;
 import omaprojekti.happyplants.Domain.SpeciesRepository;
 
@@ -36,7 +35,7 @@ public class SpeciesRestController {
 
     /* Tallentaa uuden lajin (species) */
     @PostMapping("/species")
-    public @ResponseBody Species saveSpeciesRest(@RequestBody Species species) {
+    public @ResponseBody Species saveSpeciesRest(@Valid @RequestBody Species species) {
         return speciesRepository.save(species);
     }
 }

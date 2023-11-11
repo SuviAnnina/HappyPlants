@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
@@ -28,6 +27,8 @@ public class WebSecurityConfig {
                                                 .requestMatchers(toH2Console()).permitAll()
                                                 .requestMatchers(antMatcher("/plantlist")).permitAll()
                                                 .requestMatchers(antMatcher("/specieslist")).permitAll()
+                                                .requestMatchers(antMatcher("/api/plants")).permitAll()
+                                                .requestMatchers(antMatcher("/api/species")).permitAll()
                                                 .anyRequest().authenticated())
 
                                 .csrf(csrf -> csrf

@@ -13,8 +13,12 @@
     <div class="form-center">
         <form th:object=${cutting} th:action="@{/saveCutting}" action="#" method="post">
             <p><label>Name:</label><input type="text" th:field="${cutting.cuttingName}" /></p>
+            <span th:if="${#fields.hasErrors('cuttingName')}" th:errors="*{cuttingName}"></span>
+
             <p><label>Description:</label><input type="text" th:field="${cutting.cuttingDescription}" /></p>
             <p><label>Date cut:</label><input type="text" th:field="${cutting.dateCut}" /></p>
+            <span th:if="${#fields.hasErrors('dateCut')}" th:errors="*{dateCut}"></span>
+
             <p><label>Price:</label><input type="text" th:field="${cutting.price}" /></p>
             <p><label>Additional note:</label><input type="text" th:field="${cutting.note}" /></p>
 

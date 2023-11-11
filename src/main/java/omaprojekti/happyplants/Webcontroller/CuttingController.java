@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.validation.Valid;
 import omaprojekti.happyplants.Domain.Cutting;
 import omaprojekti.happyplants.Domain.CuttingRepository;
 import omaprojekti.happyplants.Domain.Plant;
@@ -62,7 +64,10 @@ public class CuttingController {
     /* Uuden pistokkaan tallennus */
     @PostMapping("/saveCutting")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String saveCutting(Cutting cutting) {
+    public String saveCutting(@Valid Cutting cutting, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addcutting";
+        }
         cuttingRepository.save(cutting);
         return "redirect:/cuttinglist";
     }
@@ -72,7 +77,7 @@ public class CuttingController {
      */
     @PostMapping("/updateCutting")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String updateCutting(@ModelAttribute("cutting") Cutting updatedCutting) {
+    public String updateCutting(@Valid @ModelAttribute("cutting") Cutting updatedCutting, BindingResult bindingResult) {
         Long cuttingId = updatedCutting.getCuttingId();
         Cutting currentCutting = cuttingRepository.findById(cuttingId).orElse(null);
 
@@ -86,6 +91,9 @@ public class CuttingController {
             Plant selectedPlant = plantRepository.findById(updatedCutting.getPlant().getPlantId()).orElse(null);
             currentCutting.setPlant(selectedPlant);
 
+            if (bindingResult.hasErrors()) {
+                return "editcutting";
+            }
             cuttingRepository.save(currentCutting);
         }
         return "redirect:/cuttinglist";
