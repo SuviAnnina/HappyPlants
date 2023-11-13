@@ -15,9 +15,8 @@ import omaprojekti.happyplants.Domain.Plant;
 import omaprojekti.happyplants.Domain.PlantRepository;
 import omaprojekti.happyplants.Domain.Species;
 import omaprojekti.happyplants.Domain.SpeciesRepository;
-
-/* uusi */
 import org.springframework.validation.BindingResult;
+import org.thymeleaf.util.StringUtils;
 
 @Controller
 public class PlantController {
@@ -92,11 +91,19 @@ public class PlantController {
     /* Päivitä muokatun kasvin tiedot vanhojen tilalle */
     @PostMapping("/updateplant")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String updatePlant(@Valid @ModelAttribute("plant") Plant updatedPlant, BindingResult bindingResult) {
+    public String updatePlant(@Valid @ModelAttribute("plant") Plant updatedPlant, BindingResult bindingResult,
+            Model model) {
         Long plantId = updatedPlant.getPlantId();
         Plant currentPlant = plantRepository.findById(plantId).orElse(null);
 
         if (currentPlant != null) {
+            // Validate only if the plantName is not empty
+            if (StringUtils.isEmpty(updatedPlant.getPlantName())) {
+                model.addAttribute("error", "Plant name cannot be empty");
+                model.addAttribute("species", speciesRepository.findAll());
+                return "editplant";
+            }
+
             currentPlant.setPlantName(updatedPlant.getPlantName());
             currentPlant.setLightRequirement(updatedPlant.getLightRequirement());
             currentPlant.setPlantDescription(updatedPlant.getPlantDescription());
@@ -105,10 +112,13 @@ public class PlantController {
             currentPlant.setSpecies(selectedPlantSpecies);
 
             if (bindingResult.hasErrors()) {
+                model.addAttribute("species", speciesRepository.findAll());
                 return "editplant";
             }
+
             plantRepository.save(currentPlant);
         }
+
         return "redirect:/plantlist";
     }
 }

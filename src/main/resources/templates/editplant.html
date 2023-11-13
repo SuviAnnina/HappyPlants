@@ -20,14 +20,19 @@
             <p><label>Light requirement:</label><input type="text" th:field="${plant.lightRequirement}" /></p>
             <p><label>Description:</label><input type="text" th:field="${plant.plantDescription}" /></p>
 
-            <label>Species:</label>
+            <!--             <label>Species:</label>
             <select th:field="*{species}" class="form-control">
                 <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}"
                     th:selected="${s.speciesId eq plant.species?.speciesId}">
                 </option>
+            </select> -->
+
+            <label>Species:</label>
+            <select th:field="*{species}" class="form-control">
+                <option th:unless="${plant.species != null}" value="" selected disabled>- Select Species -</option>
+                <option th:each="s : ${species}" th:value="${s.speciesId}" th:text="${s.speciesLatinName}"
+                    th:selected="${s.speciesId eq plant.species?.speciesId}"></option>
             </select>
-
-
 
             <p>If species is not on the list, please add it first <a href="/addspecies">here</a>!</p>
             <input type="submit" value="Submit" class="btn btn-success" />

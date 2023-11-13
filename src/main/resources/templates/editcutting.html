@@ -23,11 +23,14 @@
 
             <p><label>Price:</label><input type="text" th:field="${cutting.price}" /></p>
             <p><label>Note:</label><input type="text" th:field="${cutting.note}" /></p>
+
             <label>Plant:</label>
-            <select th:field="*{plant}" class="form-control">
-                <option th:each="plant: ${plants}" th:value="${plant.plantId}" th:text="${plant.plantName}">
-                </option>
+            <select th:field="*{plant.plantId}" class="form-control">
+                <option th:unless="${plant?.plantName != null}" value="" selected disabled>- Select Plant -</option>
+                <option th:each="p : ${plants}" th:value="${p.plantId}" th:text="${p.plantName}"
+                    th:selected="${p.plantId eq plant?.plant?.plantId}"></option>
             </select>
+
             <input type="submit" value="Submit" class="btn btn-success" />
             <p><a href="/cuttinglist" class="btn btn-primary">Back to cuttinglisting</a></p>
         </form>

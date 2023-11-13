@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import jakarta.validation.Valid;
 import omaprojekti.happyplants.Domain.Cutting;
 import omaprojekti.happyplants.Domain.CuttingRepository;
 import omaprojekti.happyplants.Domain.Plant;
 import omaprojekti.happyplants.Domain.PlantRepository;
+import org.thymeleaf.util.StringUtils;
 
 @Controller
 public class CuttingController {
@@ -77,11 +77,19 @@ public class CuttingController {
      */
     @PostMapping("/updateCutting")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String updateCutting(@Valid @ModelAttribute("cutting") Cutting updatedCutting, BindingResult bindingResult) {
+    public String updateCutting(@Valid @ModelAttribute("cutting") Cutting updatedCutting, BindingResult bindingResult,
+            Model model) {
         Long cuttingId = updatedCutting.getCuttingId();
         Cutting currentCutting = cuttingRepository.findById(cuttingId).orElse(null);
 
         if (currentCutting != null) {
+
+            if (StringUtils.isEmpty(updatedCutting.getCuttingName())) {
+                model.addAttribute("error", "Cutting name cannot be empty");
+                model.addAttribute("plants", plantRepository.findAll());
+                return "editcutting";
+            }
+
             currentCutting.setCuttingName(updatedCutting.getCuttingName());
             currentCutting.setCuttingDescription(updatedCutting.getCuttingDescription());
             currentCutting.setDateCut(updatedCutting.getDateCut());
@@ -92,6 +100,7 @@ public class CuttingController {
             currentCutting.setPlant(selectedPlant);
 
             if (bindingResult.hasErrors()) {
+                model.addAttribute("plants", plantRepository.findAll());
                 return "editcutting";
             }
             cuttingRepository.save(currentCutting);
