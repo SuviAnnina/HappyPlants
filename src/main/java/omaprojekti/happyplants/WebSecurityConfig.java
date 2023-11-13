@@ -25,6 +25,7 @@ public class WebSecurityConfig {
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers(antMatcher("/css/**")).permitAll()
                                                 .requestMatchers(toH2Console()).permitAll()
+                                                .requestMatchers(antMatcher("/")).permitAll()
                                                 .requestMatchers(antMatcher("/plantlist")).permitAll()
                                                 .requestMatchers(antMatcher("/specieslist")).permitAll()
                                                 .requestMatchers(antMatcher("/api/plants")).permitAll()

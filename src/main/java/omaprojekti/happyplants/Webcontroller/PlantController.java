@@ -28,11 +28,28 @@ public class PlantController {
     private SpeciesRepository speciesRepository;
 
     /* Listaa kaikki tietokannasta löytyvät kasvit */
-    @GetMapping("/plantlist")
+    @GetMapping({ "/plantlist", "/" })
     public String listPlants(Model model) {
         model.addAttribute("plants", plantRepository.findAll());
         return "plantlist";
     }
+
+    /*
+     * @GetMapping("/")
+     * public String showListPlants(Model model) {
+     * model.addAttribute("plants", plantRepository.findAll());
+     * return "plantlist";
+     * }
+     */
+
+    /* Listaa kaikki tietokannasta löytyvät kasvit */
+    /*
+     * @GetMapping("/plantlist")
+     * public String listPlants(Model model) {
+     * model.addAttribute("plants", plantRepository.findAll());
+     * return "plantlist";
+     * }
+     */
 
     /* Hakee valitun kasvin pistokaslistan */
     @GetMapping("/plantcuttinglist/{id}")
