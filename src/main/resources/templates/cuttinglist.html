@@ -5,6 +5,8 @@
     <title>Happy Plants</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -49,14 +51,13 @@
 
                 <td th:text="${cutting.cuttingName}"></td>
                 <td th:text="${cutting.cuttingDescription}"></td>
-                <!--                 <td th:text="${book.category} ? ${book.category.name} : ' ' "></td> -->
                 <td th:text="${cutting.dateCut}"></td>
                 <td th:text="${cutting.price}"></td>
                 <td th:text="${cutting.note}"></td>
                 <td th:text="${cutting.plant.plantName}"></td>
 
                 <td sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-                    <a href="#" class="btn btn-success">Buy cutting</a>
+                    <a href="#" class="btn btn-success jquery">Buy cutting</a>
                 </td>
 
                 <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editcutting/{id}(id=${cutting.cuttingId})}"
@@ -72,6 +73,14 @@
 
     <a sec:authorize="hasAuthority('ADMIN')" href="/addcutting" class="btn btn-primary">Add a new cutting</a>
     <a href="/plantlist" class="btn btn-primary">Back to plantlisting</a>
+
+    <script>
+        $(document).ready(function () {
+            $(".jquery").click(function () {
+                alert("Purchasing cuttings is not available yet!")
+            });
+        });
+    </script>
 
 </body>
 
