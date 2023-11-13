@@ -21,7 +21,7 @@ public class Cutting {
 
     private String cuttingDescription;
 
-    @NotBlank(message = "Date cannot be empty")
+    /* @NotBlank(message = "Date cannot be empty") */
     private String dateCut;
 
     private double price;
