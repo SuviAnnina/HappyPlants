@@ -17,7 +17,7 @@ public class CuttingRepositoryTest {
     /* Testataan että uusi pistoks (Cutting) saadaan lisättyä tietokantaan */
     @Test
     public void createNewCuttingTest() {
-        Cutting cutting = new Cutting("Cuttingtest", "Test description");
+        Cutting cutting = new Cutting("Cuttingtest", "Test description", "11.11.2023");
         cuttingRepository.save(cutting);
         assertThat(cutting.getCuttingId()).isNotNull();
     }
@@ -25,7 +25,7 @@ public class CuttingRepositoryTest {
     /* Testataan että pistokas (Cutting) löytyy tietokannasta */
     @Test
     public void searchCuttingByCuttingName() {
-        Cutting cutting = new Cutting("Cuttingtest", "Test description");
+        Cutting cutting = new Cutting("Cuttingtest", "Test description", "11.11.2023");
         cuttingRepository.save(cutting);
         List<Cutting> findCutting = cuttingRepository.findByCuttingName("Cuttingtest");
         assertThat(findCutting.get(0).getCuttingName()).isEqualTo("Cuttingtest");
@@ -34,7 +34,7 @@ public class CuttingRepositoryTest {
     /* Testataan että pistokas (Cutting) saadaan poistettua tietokannasta */
     @Test
     public void deleteCuttingTest() {
-        Cutting cutting = new Cutting("Cuttingtest", "Test description");
+        Cutting cutting = new Cutting("Cuttingtest", "Test description", "11.11.2023");
         cuttingRepository.save(cutting);
         cuttingRepository.deleteById(cutting.getCuttingId());
         boolean cuttingExists = cuttingRepository.existsById(cutting.getCuttingId());
@@ -44,7 +44,7 @@ public class CuttingRepositoryTest {
     /* Testaan että pistokkaan (Cutting) tietoja voidaan muokata */
     @Test
     public void editCuttingInfoTest() {
-        Cutting cutting = new Cutting("Cuttingtest", "Test description");
+        Cutting cutting = new Cutting("Cuttingtest", "Test description", "11.11.2023");
         cuttingRepository.save(cutting);
 
         Cutting currenCutting = cuttingRepository.findById(cutting.getCuttingId()).orElse(null);

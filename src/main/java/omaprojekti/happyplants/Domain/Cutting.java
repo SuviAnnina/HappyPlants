@@ -21,7 +21,7 @@ public class Cutting {
 
     private String cuttingDescription;
 
-    /* @NotBlank(message = "Date cannot be empty") */
+    @NotBlank(message = "Date cannot be empty")
     private String dateCut;
 
     private double price;
@@ -46,6 +46,12 @@ public class Cutting {
         this.cuttingName = cuttingName;
         this.cuttingDescription = cuttingDescription;
         this.price = price;
+    }
+
+    public Cutting(String cuttingName, String cuttingDescription, String dateCut) {
+        this.cuttingName = cuttingName;
+        this.cuttingDescription = cuttingDescription;
+        this.dateCut = dateCut;
     }
 
     public Cutting(String cuttingName, String cuttingDescription, String dateCut, Plant plant, String note) {
