@@ -42,7 +42,6 @@ public class SpeciesController {
         Species species = speciesRepository.findById(speciesId).orElse(null);
         if (species != null) {
             model.addAttribute("species", species);
-            /* model.addAttribute("plants", plantRepository.findAll()); */
         }
         return "editspecies";
     }

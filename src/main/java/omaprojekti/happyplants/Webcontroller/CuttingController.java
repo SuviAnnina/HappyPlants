@@ -32,7 +32,7 @@ public class CuttingController {
         return "cuttinglist";
     }
 
-    /* Poistaa valitun pistokkan id:n perusteella tietokannasta */
+    /* Poista valittu pistokas id:n perusteella tietokannasta */
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteCutting(@PathVariable("id") Long cuttingId, Model model) {
@@ -40,7 +40,7 @@ public class CuttingController {
         return "redirect:/cuttinglist";
     }
 
-    /* Valitaan muokattava pistokas tietokannasta id:n perusteella */
+    /* Muokkaa valitus pistokkaan tietoja id:n perusteella */
     @GetMapping("/editcutting/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String editCutting(@PathVariable("id") long cuttingId, Model model) {
@@ -52,7 +52,7 @@ public class CuttingController {
         return "editcutting";
     }
 
-    /* Uuden pistokkaan lisäys */
+    /* Lisää uusi pistokas */
     @GetMapping("/addcutting")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String addCutting(Model model) {
@@ -61,11 +61,15 @@ public class CuttingController {
         return "addcutting";
     }
 
-    /* Uuden pistokkaan tallennus */
+    /* Tallenna uusi pistokas */
     @PostMapping("/saveCutting")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String saveCutting(@Valid Cutting cutting, BindingResult bindingResult) {
+    public String saveCutting(@Valid Cutting cutting, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            if (StringUtils.isEmpty(cutting.getCuttingName())) {
+                model.addAttribute("error", "Cutting name cannot be empty");
+                model.addAttribute("plants", plantRepository.findAll());
+            }
             return "addcutting";
         }
         cuttingRepository.save(cutting);
@@ -73,7 +77,7 @@ public class CuttingController {
     }
 
     /*
-     * Päivittää muokatun pistokkaan tiedot vanhojen tietojen tilalle tietokantaan
+     * Päivitä muokatun pistokkaan tiedot vanhojen tilalle
      */
     @PostMapping("/updateCutting")
     @PreAuthorize("hasAuthority('ADMIN')")

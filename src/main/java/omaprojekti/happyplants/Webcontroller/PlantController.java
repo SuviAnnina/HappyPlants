@@ -34,23 +34,6 @@ public class PlantController {
         return "plantlist";
     }
 
-    /*
-     * @GetMapping("/")
-     * public String showListPlants(Model model) {
-     * model.addAttribute("plants", plantRepository.findAll());
-     * return "plantlist";
-     * }
-     */
-
-    /* Listaa kaikki tietokannasta löytyvät kasvit */
-    /*
-     * @GetMapping("/plantlist")
-     * public String listPlants(Model model) {
-     * model.addAttribute("plants", plantRepository.findAll());
-     * return "plantlist";
-     * }
-     */
-
     /* Hakee valitun kasvin pistokaslistan */
     @GetMapping("/plantcuttinglist/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
@@ -65,7 +48,7 @@ public class PlantController {
         return "plantcuttinglist";
     }
 
-    /* Poista valittu kasvi tietokannasta id:n perusteella */
+    /* Poista valittu kasvi id:n perusteella tietokannasta */
     @GetMapping("/deleteplant/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deletePlant(@PathVariable("id") Long plantId, Model model) {
@@ -97,8 +80,12 @@ public class PlantController {
     /* Tallenna uusi kasvi */
     @PostMapping("/saveplant")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String savePlant(@Valid Plant plant, BindingResult bindingResult) {
+    public String savePlant(@Valid Plant plant, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            if (StringUtils.isEmpty(plant.getPlantName())) {
+                model.addAttribute("error", "Plant name cannot be empty");
+                model.addAttribute("species", speciesRepository.findAll());
+            }
             return "addplant";
         }
         plantRepository.save(plant);
@@ -114,7 +101,7 @@ public class PlantController {
         Plant currentPlant = plantRepository.findById(plantId).orElse(null);
 
         if (currentPlant != null) {
-            // Validate only if the plantName is not empty
+
             if (StringUtils.isEmpty(updatedPlant.getPlantName())) {
                 model.addAttribute("error", "Plant name cannot be empty");
                 model.addAttribute("species", speciesRepository.findAll());
